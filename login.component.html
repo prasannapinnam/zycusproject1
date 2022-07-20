@@ -1,0 +1,56 @@
+<div class="loginComp">
+<h1>SOCIAL GROVE</h1>
+    <div *ngIf="isLoading">    
+        <app-spinner ></app-spinner>
+    </div>
+    <div class="alert alert-danger warn" *ngIf="errorVal">{{errorVal}}</div>
+    <form [formGroup]="loginform" (ngSubmit)="onLogin()" *ngIf="!isLoading">
+        <div class="form-group groupbox">
+            <div class="labelbox"><label for="mail">emailAddress:</label></div>
+
+            <div class="inputbox">
+                <input type="text"
+                class="form-control"
+                [ngClass]="loginform.get('email')?.invalid ? 
+                (loginform.get('email')?.touched||loginform.get('email')?.dirty) ? ' is-invalid':'' :
+                'is-valid'"
+                id="mail"
+                name="email"
+                placeholder="xyz@email.com"
+                formControlName= "email"
+                />
+                
+                <div class="invalid-feedback">
+                    {{loginform.get('email')?.hasError('required')?
+                    "Email is required..":"  email max-length 100 char exceeded " }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group groupbox">
+            <div class="labelbox"><label for="pwd" class="pwd">password:</label></div>
+            <div class="inputbox">
+                <input type="password"
+                class="form-control"
+                [ngClass]="loginform.get('password')?.invalid ? 
+                (loginform.get('password')?.touched||loginform.get('password')?.dirty) ? ' is-invalid':'' :
+                'is-valid'"
+                id="pwd"
+                name="pwd"
+                formControlName= "password"/>
+                
+                <div class="invalid-feedback ">
+                    {{loginform.get('password')?.hasError('required')?
+                    "password is required..":'' }}
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-success login" [disabled] = "loginform.invalid" >
+            <i class="bi bi-box-arrow-in-right"></i>
+            login
+        </button>
+    </form>  
+</div>
+
+
